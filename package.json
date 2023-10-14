@@ -1,0 +1,51 @@
+{
+  "name": "micro-lisen-commit-service",
+  "version": "1.0.0",
+  "description": "servicio de escucha de cambios en azure para actualizar los despliegues en servidor local de nexos utilizando docker ",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "tsc": "tsc",
+    "start:dev": "nodemon ./src/app.ts --",
+    "conf": "npm run start:dev",
+    "dev": "npm run conf --env dev",
+    "start": "tsc && node ./build/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "automatized",
+    "service",
+    "lisen-service",
+    "azure-pipeline"
+  ],
+  "author": "Tauro Dev",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "chalk": "^4.1.2",
+    "cli-spinners": "^2.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "execa": "^5.1.1",
+    "express": "^4.18.2",
+    "moment": "^2.29.4",
+    "mongoose": "^7.5.0",
+    "node-dependency-injection": "^3.1.0",
+    "ora": "^3.4.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/moment": "^2.13.0",
+    "@types/morgan": "^1.9.4",
+    "@types/ora": "^3.2.0",
+    "@types/uuid": "^9.0.2",
+    "cross-env": "^7.0.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "tslint": "^5.12.1",
+    "typescript": "^5.1.6"
+  }
+}
