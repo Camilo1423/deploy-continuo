@@ -11,7 +11,7 @@ export interface ILisenRepository {
     getProyects(): Promise<RespEntity<ProyectEntity[]>>;
     getDeploys(uuid: string): Promise<RespEntity<DeployEntity[]>>;
     getUrlGithub(proyect: ProyectEntity): Promise<string>;
-    getUrlAzure(proyect: ProyectEntity): Promise<UrlEntity>;
+    getUrlAzure(proyect: ProyectEntity): Promise<string>;
     start(): Promise<void>;
     validateDeploy(project: ProyectEntity, commit: string): boolean;
 };

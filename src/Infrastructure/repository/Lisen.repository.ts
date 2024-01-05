@@ -89,11 +89,11 @@ export class LisenRepository implements ILisenRepository {
 
   async createProyect(proyect: ProyectEntity): Promise<RespEntity<string>> {
     try {
-      console.log(proyect)
+      console.log(proyect);
       await ProjectModel.create({ ...proyect });
       return new RespValues<string>("Proyecto creado :D", "", 200);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return new RespValues<string>("Error en el servidor :S", "", 500);
     }
   }
@@ -153,15 +153,13 @@ export class LisenRepository implements ILisenRepository {
 
   async getDeploys(uuid: string): Promise<RespEntity<DeployEntity[]>> {
     try {
-      const allDeploys = await DeployModel.find({projectDeploy: {$eq: uuid}});
+      const allDeploys = await DeployModel.find({
+        projectDeploy: { $eq: uuid },
+      });
       const deploys: DeployEntity[] = AdapterDeploys(allDeploys);
       return new RespValues<DeployEntity[]>("", deploys, 200);
     } catch (error) {
-      return new RespValues<DeployEntity[]>(
-        "Error en el servidor :S",
-        [],
-        500
-      );
+      return new RespValues<DeployEntity[]>("Error en el servidor :S", [], 500);
     }
   }
 
@@ -180,8 +178,24 @@ export class LisenRepository implements ILisenRepository {
     const msgCommit = data[0].commit.message;
     return msgCommit;
   }
-  async getUrlAzure(proyect: ProyectEntity): Promise<UrlEntity> {
-    throw new Error("Method not implemented.");
+  async getUrlAzure(proyect: ProyectEntity): Promise<string> {
+    const urlCommitBase =
+      "https://dev.azure.com/{project1}/{project2}/_apis/git/repositories/{repository}/commits";
+    const urlCommit = urlCommitBase
+      .replace("{project1}", proyect.proyecto.split("|")[0])
+      .replace("{project2}", proyect.proyecto.split("|")[1])
+      .replace("{repository}", proyect.repository);
+    const { data } = await axios.get(urlCommit, {
+      params: {
+        "api-version": "7.1-preview.1",
+      },
+      auth: {
+        username: proyect.owner,
+        password: proyect.tokenAuthentication,
+      },
+    });
+    const msgCommit = data.value[0].comment;
+    return msgCommit;
   }
 
   async start(): Promise<void> {
